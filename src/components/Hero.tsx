@@ -41,7 +41,7 @@ export default function Hero() {
           whileTap={{ scale: 0.9, rotate: [0, 10, -10, 0] }}
           className="z-50 focus:outline-none"
         >
-          <RiRobot2Line className="text-2xl text-blue-400" />
+          <RiRobot2Line className="text-2xl text-white-400" />
         </motion.button>
 
         <button 
