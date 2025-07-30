@@ -1,8 +1,8 @@
 'use client';
 
-import { motion, useMotionTemplate, useMotionValue, AnimatePresence } from "framer-motion";
-import { useState, useEffect } from "react";
-import { FiChevronDown, FiHelpCircle } from "react-icons/fi";
+import { motion, useMotionValue, AnimatePresence } from "framer-motion";
+import { useState } from "react";
+import { FiChevronDown} from "react-icons/fi";
 
 const faqs = [
   { 
@@ -11,7 +11,7 @@ const faqs = [
   },
   { 
     q: "Can I try it for free?", 
-    a: "Yes! We offer a 14-day free trial with full access to all features. No credit card required. You'll get personalized onboarding and can import your existing campaigns to see the AI in action." 
+    a: "Yes! We offer a 14-day free trial with full access to all features. No credit card required. You will get personalized onboarding and can import your existing campaigns to see the AI in action." 
   },
   { 
     q: "Is it suitable for agencies?", 
@@ -29,17 +29,6 @@ const faqs = [
 
 export default function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  useEffect(() => {
-    const handleMouseMove = ({ clientX, clientY }: MouseEvent) => {
-      mouseX.set(clientX);
-      mouseY.set(clientY);
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
 
   return (
     <section className="relative text-white py-24 px-6 text-center min-h-screen flex items-center justify-center">

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
+import { motion, useMotionValue } from "framer-motion";
 import { useEffect } from "react";
 
 const tiers = [
@@ -25,18 +25,6 @@ const tiers = [
 ];
 
 export default function Pricing() {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  useEffect(() => {
-    const handleMouseMove = ({ clientX, clientY }: MouseEvent) => {
-      mouseX.set(clientX);
-      mouseY.set(clientY);
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
-
   return (
     <section className="relative text-white py-24 px-6 text-center min-h-screen flex items-center justify-center">
       {/* Semi-transparent overlay to enhance cursor visibility */}

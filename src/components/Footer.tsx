@@ -1,38 +1,14 @@
 'use client';
 
-import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
-import { useEffect } from "react";
+import { motion} from "framer-motion";
 import { FaTwitter, FaLinkedin, FaYoutube, FaRegEnvelope } from "react-icons/fa";
 import { FiArrowUpRight } from "react-icons/fi";
 
 export default function Footer() {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
 
-  useEffect(() => {
-    const handleMouseMove = ({ clientX, clientY }: MouseEvent) => {
-      mouseX.set(clientX);
-      mouseY.set(clientY);
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
 
   return (
     <footer className="relative bg-black text-white pt-20 pb-12 px-6 overflow-hidden">
-      {/* Cursor-reactive background effects */}
-      <motion.div
-        className="absolute inset-0 opacity-20 pointer-events-none"
-        style={{
-          background: useMotionTemplate`radial-gradient(600px at ${mouseX}px ${mouseY}px, rgba(59, 130, 246, 0.15), transparent 80%)`,
-        }}
-      />
-      <motion.div
-        className="absolute inset-0 opacity-20 pointer-events-none"
-        style={{
-          background: useMotionTemplate`radial-gradient(600px at ${mouseX}px ${mouseY}px, rgba(236, 72, 153, 0.1), transparent 80%)`,
-        }}
-      />
 
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
