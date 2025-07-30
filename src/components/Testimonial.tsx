@@ -16,14 +16,14 @@ const testimonials = [
   { 
     name: "Raj M.", 
     company: "PixelNest", 
-    quote: "Game-changer for outdoor + digital synergy! We used to juggle 5 different platforms for hoardings, radio, and influencer campaigns. ADmyBRAND’s unified dashboard lets us launch, track, and optimize everything in one place. The competitor spend insights alone saved us ₹20L in misplaced ad spends last quarter.", 
+    quote: "Game-changer for outdoor + digital synergy! We used to juggle 5 different platforms for hoardings, radio, and influencer campaigns. ADmyBRAND'ss unified dashboard lets us launch, track, and optimize everything in one place. The competitor spend insights alone saved us ₹20L in misplaced ad spends last quarter.", 
     avatar: "/people/man1.jpg",
     rating: 4
   },
   { 
     name: "Emily T.", 
     company: "NovaReach", 
-    quote: "Democratizing enterprise-grade tools for SMBs! As a D2C startup, we couldn’t afford traditional agency retainers. ADmyBRAND’s self-serve platform with its AI-powered creative library and real-time KPI alerts helped us compete with big players. Our campaign setup time dropped from 3 days to 20 minutes!", 
+    quote: "Democratizing enterprise-grade tools for SMBs! As a D2C startup, we could not afford traditional agency retainers. ADmyBRAND's self-serve platform with its AI-powered creative library and real-time KPI alerts helped us compete with big players. Our campaign setup time dropped from 3 days to 20 minutes!", 
     avatar: "/people/woman2.jpg",
     rating: 5
   },
