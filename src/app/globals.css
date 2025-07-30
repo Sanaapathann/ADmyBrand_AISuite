@@ -24,3 +24,22 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* For WebKit browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 8px; /* Thin width */
+
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #ec4899, #3b82f6);
+  border-radius: 10px;
+  border: 2px solid transparent; /* Creates extra height */
+  background-clip: content-box; /* Prevents background bleed */
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ffffff;
+  border: 2px solid transparent;
+}
