@@ -1,9 +1,7 @@
-Project goal was to create a stunning landing page for "ADmyBRAND AI Suite" - A fictional AI-powered marketing tool, plus a reusable component library.
+# ADmyBRAND AI Suite
 
-Built using Next.js App Router • Tailwind CSS • Framer Motion
+A modern landing page for a fictional AI-powered marketing tool, featuring reusable components.
 
-Sections included Hero, Features, Pricing, Testimonials, FAQ, and Footer
+**Tech:** Next.js, Tailwind CSS, Framer Motion
 
-Bonus Features -> Interactive ROI Calculator & Animated Hamburger Menu
-
-[Live on Vercel](https://admybrand-ai-sp.vercel.app/)
+[Live Demo](https://admybrand-ai-sp.vercel.app/)
