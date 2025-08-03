@@ -55,7 +55,7 @@ export default function Pricing() {
   };
 
   return (
-    <section className="relative text-white py-24 px-6 text-center min-h-screen flex items-center justify-center">
+    <section className="relative text-white py-15 px-6 text-center min-h-screen flex items-center justify-center">
       {/* Background overlay */}
       <div className="absolute inset-0 bg-black/40 z-0" />
 
