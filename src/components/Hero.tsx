@@ -1,162 +1,70 @@
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useRef } from "react";
-import { FiMenu, FiX } from "react-icons/fi";
+import { useState } from "react";
+import { FiMenu, FiX, FiTrendingUp, FiUsers, FiDollarSign, FiBarChart2 } from "react-icons/fi";
 import { RiRobot2Line } from "react-icons/ri";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function Hero() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isCalculatorOpen, setIsCalculatorOpen] = useState(false);
-  const [budget, setBudget] = useState<number>(100000);
-  const [channels, setChannels] = useState<number>(3);
-  const calculatorRef = useRef<HTMLDivElement>(null);
 
-  const calculateROI = (budget: number, channels: number): number => {
-    const baseROI = budget * 0.4;
-    const channelBonus = channels * 0.05 * budget;
-    return Math.round(baseROI + channelBonus);
-  };
-
-  const formatCurrency = (value: number): string => {
-    return new Intl.NumberFormat('en-IN', {
-      style: 'currency',
-      currency: 'INR',
-      maximumFractionDigits: 0
-    }).format(value);
-  };
-
-  const handleOverlayClick = (e: React.MouseEvent) => {
-    if (calculatorRef.current && !calculatorRef.current.contains(e.target as Node)) {
-      setIsCalculatorOpen(false);
-    }
-  };
+  // Sample data for the chart
+  const chartData = [30, 60, 40, 80, 60, 90, 120];
+  const maxData = Math.max(...chartData);
 
   return (
-    <section className="relative text-white py-24 px-6 text-center min-h-screen flex items-center justify-center">
-      {/* Navigation */}
-      <nav className="absolute top-0 left-0 right-0 flex justify-between items-center p-6 z-50">
-        <motion.button
-          onClick={() => setIsCalculatorOpen(true)}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9, rotate: [0, 10, -10, 0] }}
-          className="z-50 focus:outline-none"
-        >
-          <RiRobot2Line className="text-2xl text-white-400" />
-        </motion.button>
+    <section className="relative text-white py-12 md:py-24 px-4 md:px-6 text-center min-h-[calc(100vh-80px)] md:min-h-screen flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-16">
+      {/* Fixed Navigation Bar */}
+      <nav className="fixed top-0 left-0 right-0 flex justify-between items-center p-4 md:p-6 z-50 bg-black/30 backdrop-blur-md border-b border-gray-700/50">
+        <div className="flex items-center gap-4">
+          <Link href="/" className="flex items-center gap-2">
+            <Image 
+              src="/logo/logo.png" 
+              alt="ADmyBRAND Logo"
+              width={200}
+              height={50}
+              className="hover:scale-110 transition-transform"
+            />
+            
+          </Link>
+          
+          <div className="hidden md:flex items-center gap-6 ml-8">
+            <Link href="/pricing" className="text-gray-300 hover:text-blue-400 transition-colors">
+              Pricing
+            </Link>
+            <Link href="/resources" className="text-gray-300 hover:text-blue-400 transition-colors">
+              Resources
+            </Link>
+            <Link href="/contact" className="text-gray-300 hover:text-blue-400 transition-colors">
+              Contact
+            </Link>
+          </div>
+        </div>
 
-        <button 
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="z-50 focus:outline-none"
-        >
-          {isMenuOpen ? <FiX className="text-2xl" /> : <FiMenu className="text-2xl" />}
-        </button>
+        <div className="flex items-center gap-4">
+          <Link 
+            href="/login" 
+            className="text-gray-300 hover:text-pink-400 transition-colors px-3 py-1"
+          >
+            Login
+          </Link>
+          <Link
+            href="/signup"
+            className="text-gray-300 hover:text-pink-400 transition-colors px-3 py-1"
+          >
+            Sign Up
+          </Link>
+          <button 
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="md:hidden z-50 focus:outline-none text-gray-300 hover:text-white"
+          >
+            {isMenuOpen ? <FiX className="text-2xl" /> : <FiMenu className="text-2xl" />}
+          </button>
+        </div>
       </nav>
 
-      {/* Calculator Overlay */}
-      <AnimatePresence>
-        {isCalculatorOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-40 flex items-center justify-center"
-            onClick={handleOverlayClick}
-          >
-            <motion.div
-  ref={calculatorRef}
-  initial={{ scale: 0.9, y: 20 }}
-  animate={{ scale: 1, y: 0 }}
-  exit={{ scale: 0.9, y: 20 }}
-  className="bg-gray-800/90 p-8 rounded-xl border border-gray-700 max-w-md w-full mx-4 relative"
->
-  {/* Close button with proper spacing */}
-  <button
-    onClick={() => setIsCalculatorOpen(false)}
-    className="absolute top-4 right-3 text-gray-400 hover:text-white focus:outline-none transition-colors"
-    aria-label="Close calculator"
-  >
-    <FiX className="text-xl" />
-  </button>
-  
-  {/* Heading with adjusted margin-top to account for close button */}
-  <h2 className="text-3xl font-bold mt-2 mb-8 text-center bg-gradient-to-r from-pink-500 to-blue-500 bg-clip-text text-transparent">
-    Campaign ROI Calculator
-  </h2>
-        
-              <div className="space-y-6">
-                <div>
-                  <label className="block mb-2 text-gray-300">
-                    Monthly Budget: {formatCurrency(budget)}
-                  </label>
-                  <input
-                    type="range"
-                    min="50000"
-                    max="5000000"
-                    step="50000"
-                    value={budget}
-                    onChange={(e) => setBudget(parseInt(e.target.value))}
-                    className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-pink-500"
-                  />
-                  <div className="flex justify-between text-xs text-gray-500 mt-1">
-                    <span>₹50K</span>
-                    <span>₹5M</span>
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block mb-2 text-gray-300">
-                    Number of Channels: {channels}
-                  </label>
-                  <input
-                    type="range"
-                    min="1"
-                    max="10"
-                    value={channels}
-                    onChange={(e) => setChannels(parseInt(e.target.value))}
-                    className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-500"
-                  />
-                </div>
-
-                <motion.div 
-                  className="bg-gray-900/50 p-6 rounded-xl border-l-4 border-pink-500"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.1 }}
-                >
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <p className="text-gray-400">Your Investment</p>
-                      <p className="text-xl font-bold">{formatCurrency(budget)}</p>
-                    </div>
-                    <div>
-                      <p className="text-gray-400">Estimated ROI</p>
-                      <motion.p
-                        key={`roi-${budget}-${channels}`}
-                        initial={{ scale: 0.9 }}
-                        animate={{ scale: 1 }}
-                        className="text-xl font-bold text-pink-400"
-                      >
-                        {formatCurrency(calculateROI(budget, channels))}
-                      </motion.p>
-                    </div>
-                  </div>
-                  <div className="mt-4 text-sm text-gray-400">
-                    (+{Math.round((calculateROI(budget, channels) / budget) * 100)}% return)
-                  </div>
-                </motion.div>
-
-                <button className="w-full bg-gradient-to-r from-pink-600 to-blue-600 hover:from-pink-700 hover:to-blue-700 text-white py-3 rounded-lg font-medium transition-all">
-                  Get Custom Proposal
-                </button>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-  
-
-      
-      {/* Overlay menu */}
+      {/* Mobile Overlay menu */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
@@ -168,28 +76,39 @@ export default function Hero() {
           >
             <div className="flex justify-end">
               <ul className="space-y-6 text-xl w-max">
-                {['Signup', 'Login'].map((item) => (
+                {['Pricing', 'Resources', 'Contact'].map((item) => (
                   <motion.li
                     key={item}
                     whileHover={{ x: -10 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <button className="hover:text-blue-400 transition-colors">
+                    <Link 
+                      href={`/${item.toLowerCase()}`} 
+                      className="hover:text-blue-400 transition-colors block"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
                       {item}
-                    </button>
+                    </Link>
                   </motion.li>
                 ))}
-                {['Features', 'Pricing', 'Demo', 'About', 'Contact'].map((item) => (
-                  <motion.li
-                    key={item}
-                    whileHover={{ x: -10 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <button className="hover:text-pink-400 transition-colors">
-                      {item}
-                    </button>
-                  </motion.li>
-                ))}
+                <div className="pt-4 border-t border-gray-700/50">
+                  {['Login', 'Sign Up'].map((item) => (
+                    <motion.li
+                      key={item}
+                      whileHover={{ x: -10 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="mt-4"
+                    >
+                      <Link 
+                        href={`/${item.toLowerCase().replace(' ', '-')}`} 
+                        className={`block ${item === 'Sign Up' ? 'text-pink-400 hover:text-pink-300' : 'text-blue-400 hover:text-blue-300'} transition-colors`}
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        {item}
+                      </Link>
+                    </motion.li>
+                  ))}
+                </div>
               </ul>
             </div>
           </motion.div>
@@ -199,54 +118,155 @@ export default function Hero() {
       {/* Semi-transparent overlay */}
       <div className="absolute inset-0 bg-black/40 z-0" />
       
-      {/* Content */}
-      <div className="max-w-3xl mx-auto px-4 relative z-10">
+      {/* Left Column - Text Content */}
+      <div className="max-w-xl lg:max-w-md text-center lg:text-left z-10 mt-20">
         <motion.h1 
-          className="text-4xl md:text-5xl font-bold mb-6 leading-tight" 
-          initial={{ opacity: 0 }} 
-          animate={{ opacity: 1 }} 
-          transition={{ delay: 0.1, duration: 0.6 }}
+          className="text-3xl md:text-5xl font-bold mb-4 md:mb-6 leading-tight"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6 }}
         > 
           <span className="text-white">ADmyBRAND</span>{' '} 
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-pink-400">AI Suite</span> 
-        </motion.h1> 
-          
-        <motion.p 
-          className="text-lg mb-8 max-w-xl mx-auto text-gray-300"
-          initial={{ opacity: 0 }} 
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2, duration: 0.6 }}
-        > 
-          Intelligent marketing automation without the complexity 
-        </motion.p>
+        </motion.h1>
         
-        <div className="flex flex-col sm:flex-row justify-center gap-3">
-          <motion.button 
-            whileHover={{ 
-              scale: 1.02,
-              background: 'linear-gradient(to right, #3b82f6, #ec4899)',
-              boxShadow: '0 0 20px rgba(59, 130, 246, 0.5)'
-            }}
-            className="bg-white text-black px-6 py-2.5 rounded-md text-sm font-medium tracking-wide transition-all"
-          >
-            Get Started
-          </motion.button>
-          
-          <motion.button 
-            whileHover={{ 
-              scale: 1.02,
-              backgroundColor: 'rgba(255,255,255,0.1)',
-              borderColor: 'rgba(236, 72, 153, 0.5)',
-              boxShadow: '0 0 15px rgba(236, 72, 153, 0.3)'
-            }}
-            className="bg-transparent text-white border border-white/20 px-6 py-2.5 rounded-md text-sm font-medium tracking-wide transition-all"
-          >
-            Watch Demo
-          </motion.button>
-        </div>
+        <motion.p
+          className="text-base md:text-lg mb-6 md:mb-8 text-gray-300"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
+        >
+          Intelligent marketing automation that <span className="text-blue-300">scales your business</span>
+        </motion.p>
+
+        <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
+  {/* Get Started Button */}
+  <motion.button
+    whileHover={{ 
+      scale: 1.05,
+      background: "linear-gradient(45deg, #ffffff, #f0f0f0)",
+      boxShadow: "0 4px 15px rgba(255, 255, 255, 0.2)"
+    }}
+    whileTap={{ scale: 0.95 }}
+    transition={{ duration: 0.3, ease: "easeInOut" }}
+    className="relative bg-white text-black px-6 py-3 rounded-md font-medium overflow-hidden group"
+  >
+    <span className="relative z-10">Get Started</span>
+    <motion.span
+      className="absolute inset-0 bg-gradient-to-r from-blue-100 to-pink-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+      initial={{ opacity: 0 }}
+    />
+  </motion.button>
+
+  {/* Live Demo Button */}
+  <motion.button
+    whileHover={{ 
+      scale: 1.05,
+      borderColor: "rgba(255, 255, 255, 0.5)",
+      backgroundColor: "rgba(255, 255, 255, 0.1)",
+      boxShadow: "0 4px 15px rgba(255, 255, 255, 0.1)"
+    }}
+    whileTap={{ scale: 0.95 }}
+    transition={{ duration: 0.3, ease: "easeInOut" }}
+    className="relative bg-transparent text-white border border-white/20 px-6 py-3 rounded-md font-medium overflow-hidden group"
+  >
+    <span className="relative z-10">Live Demo</span>
+    <motion.span
+      className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+      initial={{ opacity: 0 }}
+    />
+    <motion.span
+      className="absolute inset-0 border-2 border-transparent group-hover:border-white/10 rounded-md transition-all duration-300"
+      initial={{ borderWidth: 0 }}
+    />
+  </motion.button>
+</div>
       </div>
 
-      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 w-20 h-px bg-white/20 z-10"></div>
+      {/* Right Column - Dashboard UI */}
+      <motion.div 
+        className="relative w-full max-w-2xl z-10"
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.3 }}
+      >
+        <div className="bg-gray-800/20 backdrop-blur-lg border border-gray-700/50 rounded-xl p-6 shadow-lg">
+          {/* Dashboard Header */}
+          <div className="flex justify-between items-center mb-6">
+            <h3 className="font-medium text-blue-400 flex items-center gap-2">
+              <FiTrendingUp /> Campaign Growth
+            </h3>
+            <span className="text-xs bg-green-900/30 text-green-400 px-2 py-1 rounded">
+              Live Data
+            </span>
+          </div>
+
+          {/* Metrics Grid */}
+          <div className="grid grid-cols-2 gap-4 mb-6">
+            {[
+              { icon: <FiUsers className="text-blue-400" />, label: "Leads", value: "1.2K", change: "+12%" },
+              { icon: <FiDollarSign className="text-pink-400" />, label: "Revenue", value: "$42K", change: "+24%" },
+              { icon: <RiRobot2Line className="text-purple-400" />, label: "AI Actions", value: "3.8K", change: "+38%" },
+              { icon: <FiBarChart2 className="text-green-400" />, label: "ROAS", value: "4.2x", change: "+0.8x" },
+            ].map((item, i) => (
+              <div key={i} className="bg-gray-900/20 p-3 rounded-lg border border-gray-800/50">
+                <div className="flex items-center gap-2">
+                  {item.icon}
+                  <span className="text-xs text-gray-400">{item.label}</span>
+                </div>
+                <p className="text-xl font-bold mt-1">{item.value}</p>
+                <p className="text-xs text-green-400 mt-1">{item.change}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Line Chart Visualization */}
+          <div className="h-48 relative">
+            <div className="absolute bottom-0 left-0 right-0 h-px bg-gray-700/50"></div>
+            <div className="absolute top-0 right-0 left-0 h-px bg-gray-700/50"></div>
+            
+            {/* Grid lines */}
+            <div className="absolute inset-0 grid grid-cols-6">
+              {[...Array(6)].map((_, i) => (
+                <div key={i} className="border-r border-gray-700/30"></div>
+              ))}
+            </div>
+            
+            {/* Data line */}
+            <div className="absolute bottom-0 left-0 right-0 h-full flex items-end">
+              {chartData.map((value, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ height: 0 }}
+                  animate={{ height: `${(value / maxData) * 100}%` }}
+                  transition={{ duration: 0.8, delay: i * 0.1 }}
+                  className="relative flex-1 flex items-end"
+                >
+                  <div className="w-full bg-gradient-to-t from-blue-500 to-blue-400 rounded-t-sm mx-0.5 h-full">
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: i * 0.1 + 0.5 }}
+                      className="absolute -top-5 left-1/2 transform -translate-x-1/2 text-xs text-blue-300"
+                    >
+                      {value}%
+                    </motion.div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+            
+            {/* X-axis labels */}
+            <div className="absolute -bottom-6 left-0 right-0 flex justify-between text-xs text-gray-500">
+              {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'].map((month, i) => (
+                <span key={i}>{month}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </motion.div>
+
+      <div className="absolute bottom-6 md:bottom-10 left-1/2 transform -translate-x-1/2 w-20 h-px bg-white/20 z-10"></div>
     </section>
   );
 }
